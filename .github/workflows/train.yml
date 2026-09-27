@@ -20,11 +20,22 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Check model files
+      - name: Validate dataset
         run: |
-          test -f my_ai.pt
-          test -f data/vocab.json
+          python training/validate_dataset.py
+
+      - name: Train model
+        run: |
+          python training/train.py
 
       - name: Test inference
         run: |
           printf "ඔයා කවුද?\nexit\n" | python inference/inference.py
+
+      - name: Upload model
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-ai-model
+          path: |
+            my_ai.pt
+            data/vocab.json
