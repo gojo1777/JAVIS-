@@ -34,7 +34,7 @@ from dataset import AIDataset
 
 BATCH_SIZE = 16           # Batch size වැඩි කර Speed එක වැඩි කරන ලදී
 LEARNING_RATE = 3e-4
-EPOCHS = 5                # 300 තිබූ Epochs ගණන 5 දක්වා අඩු කරන ලදී
+EPOCHS = 20                # 300 තිබූ Epochs ගණන 5 දක්වා අඩු කරන ලදී
 BLOCK_SIZE = 256
 GRAD_CLIP = 1.0
 
