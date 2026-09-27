@@ -1,10 +1,5 @@
 name: Train and Chat-Test MY-AI
 
-# Trigger manually from the Actions tab ("Run workflow").
-# GitHub Actions has no interactive terminal, so "chatting" here
-# means: we send several prompts (memorized ones AND new ones the
-# model hasn't seen) and print the replies to the run log, so you
-# can read the conversation after the run finishes.
 on:
   workflow_dispatch:
 
@@ -26,6 +21,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Build expanded dataset
+        run: |
+          python data/build_expanded_dataset.py
+
       - name: Validate dataset
         run: |
           python training/validate_dataset.py
@@ -34,13 +33,9 @@ jobs:
         run: |
           python training/train.py
 
-      - name: Chat test (prompts from training data)
+      - name: Chat test (Sinhala & Singlish prompts)
         run: |
-          printf "ඔයා කවුද?\nකොහොමද?\nස්තුතියි\nexit\n" | python inference/inference.py
-
-      - name: Chat test (new / reworded prompts, not in training data)
-        run: |
-          printf "ML කියන්නේ මොකක්ද?\nHow can I learn to code?\nCan you teach me Python?\nexit\n" | python inference/inference.py
+          printf "ඔයා කවුද?\nකොහොමද?\nසින්හලන් පුලුවන්ද\npython gana kiyaham\nML කියන්නේ මොකක්ද?\nස්තුතියි\nexit\n" | python inference/inference.py
 
       - name: Upload model + logs
         uses: actions/upload-artifact@v4
