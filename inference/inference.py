@@ -99,6 +99,14 @@ def generate(
         device=DEVICE
     )
 
+    assistant_id = tokenizer.vocab.get(
+        "<assistant>"
+    )
+
+    eos_id = tokenizer.vocab.get(
+        "<EOS>"
+    )
+
     with torch.no_grad():
 
         for _ in range(max_new_tokens):
@@ -137,40 +145,58 @@ def generate(
                 dim=1
             )
 
-            token_id = (
-                next_token.item()
-            )
+            token_id = next_token.item()
 
-            if token_id == tokenizer.vocab.get(
-                "<EOS>"
-            ):
+            if token_id == eos_id:
                 break
 
     generated_ids = idx[
         0
     ].tolist()
 
+    # =========================
+    # Get tokens after assistant
+    # =========================
+
+    if assistant_id in generated_ids:
+
+        assistant_position = (
+            len(generated_ids)
+            - 1
+            - generated_ids[::-1].index(
+                assistant_id
+            )
+        )
+
+        generated_ids = generated_ids[
+            assistant_position + 1:
+        ]
+
+    # =========================
+    # Stop at special tokens
+    # =========================
+
+    clean_ids = []
+
+    for token_id in generated_ids:
+
+        if token_id in {
+            eos_id,
+            tokenizer.vocab.get("<user>"),
+            tokenizer.vocab.get("<assistant>"),
+        }:
+
+            break
+
+        clean_ids.append(token_id)
+
+    # =========================
+    # Decode
+    # =========================
+
     generated_text = tokenizer.decode(
-        generated_ids
+        clean_ids
     )
-
-    if "<assistant>" in generated_text:
-
-        generated_text = (
-            generated_text.split(
-                "<assistant>",
-                1
-            )[1]
-        )
-
-    if "<user>" in generated_text:
-
-        generated_text = (
-            generated_text.split(
-                "<user>",
-                1
-            )[0]
-        )
 
     return generated_text.strip()
 
@@ -215,5 +241,10 @@ def main():
         print()
 
 
+# =========================
+# Start
+# =========================
+
 if __name__ == "__main__":
+
     main()
