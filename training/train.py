@@ -29,21 +29,22 @@ from dataset import AIDataset
 
 
 # =========================
-# Settings
+# Settings (Optimized for Fast Training on GitHub Actions)
 # =========================
 
-BATCH_SIZE = 4
+BATCH_SIZE = 16           # Batch size වැඩි කර Speed එක වැඩි කරන ලදී
 LEARNING_RATE = 3e-4
-EPOCHS = 300              # tiny dataset needs many more passes to converge
+EPOCHS = 5                # 300 තිබූ Epochs ගණන 5 දක්වා අඩු කරන ලදී
 BLOCK_SIZE = 256
 GRAD_CLIP = 1.0
 
-SAMPLE_EVERY = 10         # generate a sample reply every N epochs
+SAMPLE_EVERY = 1          # සැම Epoch එකකදීම progress එක බලන්න
 LOG_EVERY = 1             # print/log loss every N epochs
 
 SAMPLE_PROMPTS = [
     "ඔයා කවුද?",
     "කොහොමද?",
+    "python gana kiyaham"
 ]
 
 DEVICE = (
@@ -234,8 +235,6 @@ def generate_sample(prompt, max_new_tokens=40):
         logits = model(input_ids)
         next_logits = logits[:, -1, :]
 
-        # greedy decoding: clearest signal of what the model has
-        # actually learned, without sampling noise
         next_token = torch.argmax(
             next_logits, dim=-1, keepdim=True
         )
@@ -265,7 +264,7 @@ def generate_sample(prompt, max_new_tokens=40):
 # =========================
 
 log("==============================")
-log("MY-AI Training")
+log("MY-AI Fast Training")
 log("==============================")
 log(f"Device: {DEVICE}")
 log(f"Training samples: {len(dataset)}")
@@ -311,9 +310,6 @@ for epoch in range(EPOCHS):
 
         loss.backward()
 
-        # gradient clipping: keeps training stable on a small,
-        # noisy dataset where a single batch can otherwise cause
-        # a large, destabilizing update
         torch.nn.utils.clip_grad_norm_(
             model.parameters(), GRAD_CLIP
         )
@@ -333,18 +329,12 @@ for epoch in range(EPOCHS):
             f"- Elapsed: {elapsed:.1f}s"
         )
 
-    # =========================
-    # Save best checkpoint so far
-    # =========================
-
+    # Save best checkpoint
     if average_loss < best_loss:
         best_loss = average_loss
         torch.save(model.state_dict(), BEST_MODEL_FILE)
 
-    # =========================
-    # Periodic qualitative check
-    # =========================
-
+    # Periodic Qualitative Check
     if (epoch + 1) % SAMPLE_EVERY == 0 or epoch == EPOCHS - 1:
         for prompt in SAMPLE_PROMPTS:
             sample = generate_sample(prompt)
