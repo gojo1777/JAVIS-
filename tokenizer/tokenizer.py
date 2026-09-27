@@ -1,6 +1,5 @@
 import json
 import re
-from pathlib import Path
 
 
 class Tokenizer:
@@ -14,23 +13,10 @@ class Tokenizer:
             "<EOS>",
             "<user>",
             "<assistant>",
-            "<system>",
         ]
 
         self.vocab = {}
         self.id_to_token = {}
-
-    # =========================
-    # Tokenize
-    # =========================
-
-    def tokenize(self, text):
-
-        return re.findall(
-            r"<[^>]+>|\w+|[^\w\s]",
-            text,
-            re.UNICODE
-        )
 
     # =========================
     # Build vocabulary
@@ -40,33 +26,45 @@ class Tokenizer:
 
         token_set = set()
 
+        pattern = (
+            r"<user>|"
+            r"<assistant>|"
+            r"<PAD>|"
+            r"<UNK>|"
+            r"<BOS>|"
+            r"<EOS>|"
+            r"\w+|"
+            r"[^\w\s]"
+        )
+
         for text in texts:
 
-            tokens = self.tokenize(text)
+            tokens = re.findall(
+                pattern,
+                text,
+                re.UNICODE
+            )
 
             token_set.update(tokens)
 
-        normal_tokens = sorted(
-            token
-            for token in token_set
-            if token not in self.special_tokens
-        )
-
         all_tokens = (
             self.special_tokens
-            + normal_tokens
+            + sorted(
+                token_set
+                - set(self.special_tokens)
+            )
         )
 
         self.vocab = {
-            token: index
-            for index, token
-            in enumerate(all_tokens)
+            token: i
+            for i, token in enumerate(
+                all_tokens
+            )
         }
 
         self.id_to_token = {
-            index: token
-            for token, index
-            in self.vocab.items()
+            i: token
+            for token, i in self.vocab.items()
         }
 
     # =========================
@@ -80,23 +78,36 @@ class Tokenizer:
         add_eos=False
     ):
 
-        tokens = self.tokenize(text)
+        pattern = (
+            r"<user>|"
+            r"<assistant>|"
+            r"<PAD>|"
+            r"<UNK>|"
+            r"<BOS>|"
+            r"<EOS>|"
+            r"\w+|"
+            r"[^\w\s]"
+        )
 
-        ids = []
+        tokens = re.findall(
+            pattern,
+            text,
+            re.UNICODE
+        )
+
+        ids = [
+            self.vocab.get(
+                token,
+                self.vocab["<UNK>"]
+            )
+            for token in tokens
+        ]
 
         if add_bos:
 
-            ids.append(
+            ids.insert(
+                0,
                 self.vocab["<BOS>"]
-            )
-
-        for token in tokens:
-
-            ids.append(
-                self.vocab.get(
-                    token,
-                    self.vocab["<UNK>"]
-                )
             )
 
         if add_eos:
@@ -113,77 +124,29 @@ class Tokenizer:
 
     def decode(self, ids):
 
-        tokens = []
-
-        for token_id in ids:
-
-            token = self.id_to_token.get(
-                int(token_id),
+        tokens = [
+            self.id_to_token.get(
+                int(i),
                 "<UNK>"
             )
+            for i in ids
+        ]
 
-            if token in {
-                "<PAD>",
-                "<BOS>",
-                "<EOS>",
-            }:
-                continue
+        return " ".join(tokens)
 
-            tokens.append(token)
+    # =========================
+    # Length
+    # =========================
 
-        text = ""
+    def __len__(self):
 
-        punctuation = {
-            ".",
-            ",",
-            "!",
-            "?",
-            ":",
-            ";",
-            "%",
-            ")",
-            "]",
-            "}",
-        }
-
-        opening = {
-            "(",
-            "[",
-            "{",
-        }
-
-        for token in tokens:
-
-            if not text:
-
-                text = token
-
-            elif token in punctuation:
-
-                text += token
-
-            elif text[-1:] in opening:
-
-                text += token
-
-            else:
-
-                text += " " + token
-
-        return text
+        return len(self.vocab)
 
     # =========================
     # Save
     # =========================
 
     def save(self, path):
-
-        path = Path(path)
-
-        path.parent.mkdir(
-            parents=True,
-            exist_ok=True
-        )
 
         with open(
             path,
@@ -213,15 +176,6 @@ class Tokenizer:
             self.vocab = json.load(file)
 
         self.id_to_token = {
-            int(index): token
-            for token, index
-            in self.vocab.items()
+            int(i): token
+            for token, i in self.vocab.items()
         }
-
-    # =========================
-    # Vocabulary size
-    # =========================
-
-    def __len__(self):
-
-        return len(self.vocab)
