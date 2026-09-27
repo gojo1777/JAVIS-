@@ -1,3 +1,4 @@
+import json
 import re
 
 
@@ -14,37 +15,76 @@ class Tokenizer:
         self.id_to_token = {}
 
     def build_vocab(self, texts):
-        tokens = []
+        token_set = set()
 
         for text in texts:
-            # Sinhala + English + numbers + punctuation
-            words = re.findall(r"\w+|[^\w\s]", text, re.UNICODE)
-            tokens.extend(words)
+            tokens = re.findall(
+                r"\w+|[^\w\s]",
+                text,
+                re.UNICODE
+            )
+            token_set.update(tokens)
 
-        unique_tokens = sorted(set(tokens))
-
-        all_tokens = self.special_tokens + unique_tokens
+        all_tokens = self.special_tokens + sorted(token_set)
 
         self.vocab = {
-            token: i for i, token in enumerate(all_tokens)
+            token: i
+            for i, token in enumerate(all_tokens)
         }
 
         self.id_to_token = {
-            i: token for token, i in self.vocab.items()
+            i: token
+            for token, i in self.vocab.items()
         }
 
     def encode(self, text):
-        words = re.findall(r"\w+|[^\w\s]", text, re.UNICODE)
+        tokens = re.findall(
+            r"\w+|[^\w\s]",
+            text,
+            re.UNICODE
+        )
 
         return [
-            self.vocab.get(word, self.vocab["<UNK>"])
-            for word in words
+            self.vocab.get(
+                token,
+                self.vocab["<UNK>"]
+            )
+            for token in tokens
         ]
 
     def decode(self, ids):
         tokens = [
-            self.id_to_token.get(i, "<UNK>")
+            self.id_to_token.get(
+                i,
+                "<UNK>"
+            )
             for i in ids
         ]
 
         return " ".join(tokens)
+
+    def save(self, path):
+        with open(
+            path,
+            "w",
+            encoding="utf-8"
+        ) as file:
+            json.dump(
+                self.vocab,
+                file,
+                ensure_ascii=False,
+                indent=2
+            )
+
+    def load(self, path):
+        with open(
+            path,
+            "r",
+            encoding="utf-8"
+        ) as file:
+            self.vocab = json.load(file)
+
+        self.id_to_token = {
+            int(i): token
+            for token, i in self.vocab.items()
+        }
