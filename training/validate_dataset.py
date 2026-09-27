@@ -3,31 +3,34 @@ from pathlib import Path
 
 
 # =========================
-# Settings
+# Dataset path
 # =========================
 
-DATASET_FILE = (
+ROOT_DIR = (
     Path(__file__).resolve().parent.parent
+)
+
+DATASET_FILE = (
+    ROOT_DIR
     / "data"
     / "conversations.jsonl"
 )
 
 
 # =========================
-# Validation
+# Validate dataset
 # =========================
 
-def validate_dataset():
+def validate():
 
     if not DATASET_FILE.exists():
-        print("ERROR: Dataset file not found.")
-        print(f"Expected: {DATASET_FILE}")
-        return
+
+        raise FileNotFoundError(
+            f"Dataset not found: {DATASET_FILE}"
+        )
 
     total = 0
     valid = 0
-    errors = 0
-    duplicates = 0
 
     seen = set()
 
@@ -37,7 +40,10 @@ def validate_dataset():
         encoding="utf-8"
     ) as file:
 
-        for line_number, line in enumerate(file, start=1):
+        for line_number, line in enumerate(
+            file,
+            1
+        ):
 
             line = line.strip()
 
@@ -46,212 +52,133 @@ def validate_dataset():
 
             total += 1
 
-            # -------------------------
+            # =========================
             # JSON check
-            # -------------------------
+            # =========================
 
             try:
+
                 item = json.loads(line)
 
             except json.JSONDecodeError as error:
 
-                print(
-                    f"[ERROR] Line {line_number}: "
-                    f"Invalid JSON"
+                raise ValueError(
+                    f"Invalid JSON on line "
+                    f"{line_number}: {error}"
                 )
 
-                print(
-                    f"        {error}"
+            # =========================
+            # Messages check
+            # =========================
+
+            messages = item.get(
+                "messages"
+            )
+
+            if not isinstance(
+                messages,
+                list
+            ) or not messages:
+
+                raise ValueError(
+                    f"Line {line_number}: "
+                    "'messages' must be a "
+                    "non-empty list."
                 )
 
-                errors += 1
-                continue
-
-            # -------------------------
-            # messages check
-            # -------------------------
-
-            if "messages" not in item:
-
-                print(
-                    f"[ERROR] Line {line_number}: "
-                    f"Missing 'messages'"
-                )
-
-                errors += 1
-                continue
-
-            messages = item["messages"]
-
-            if not isinstance(messages, list):
-
-                print(
-                    f"[ERROR] Line {line_number}: "
-                    f"'messages' must be a list"
-                )
-
-                errors += 1
-                continue
-
-            if len(messages) < 2:
-
-                print(
-                    f"[ERROR] Line {line_number}: "
-                    f"Conversation needs at least "
-                    f"2 messages"
-                )
-
-                errors += 1
-                continue
-
-            # -------------------------
-            # Message validation
-            # -------------------------
-
-            conversation_valid = True
+            # =========================
+            # Message check
+            # =========================
 
             for message in messages:
 
-                if not isinstance(message, dict):
+                if not isinstance(
+                    message,
+                    dict
+                ):
 
-                    print(
-                        f"[ERROR] Line {line_number}: "
-                        f"Invalid message format"
+                    raise ValueError(
+                        f"Line {line_number}: "
+                        "Invalid message."
                     )
 
-                    conversation_valid = False
-                    break
+                role = message.get(
+                    "role"
+                )
 
-                if "role" not in message:
-
-                    print(
-                        f"[ERROR] Line {line_number}: "
-                        f"Message missing 'role'"
-                    )
-
-                    conversation_valid = False
-                    break
-
-                if "content" not in message:
-
-                    print(
-                        f"[ERROR] Line {line_number}: "
-                        f"Message missing 'content'"
-                    )
-
-                    conversation_valid = False
-                    break
-
-                role = message["role"]
-                content = message["content"]
+                content = message.get(
+                    "content"
+                )
 
                 if role not in {
                     "user",
-                    "assistant",
-                    "system"
+                    "assistant"
                 }:
 
-                    print(
-                        f"[ERROR] Line {line_number}: "
-                        f"Unknown role: {role}"
+                    raise ValueError(
+                        f"Line {line_number}: "
+                        f"Invalid role: {role}"
                     )
 
-                    conversation_valid = False
-                    break
+                if not isinstance(
+                    content,
+                    str
+                ) or not content.strip():
 
-                if not isinstance(content, str):
-
-                    print(
-                        f"[ERROR] Line {line_number}: "
-                        f"Content must be text"
+                    raise ValueError(
+                        f"Line {line_number}: "
+                        "Message content is empty."
                     )
 
-                    conversation_valid = False
-                    break
-
-                if not content.strip():
-
-                    print(
-                        f"[ERROR] Line {line_number}: "
-                        f"Empty message"
-                    )
-
-                    conversation_valid = False
-                    break
-
-            if not conversation_valid:
-
-                errors += 1
-                continue
-
-            # -------------------------
+            # =========================
             # Duplicate check
-            # -------------------------
+            # =========================
 
-            conversation_key = json.dumps(
+            signature = json.dumps(
                 item,
                 ensure_ascii=False,
                 sort_keys=True
             )
 
-            if conversation_key in seen:
+            if signature in seen:
 
-                print(
-                    f"[WARNING] Line {line_number}: "
-                    f"Duplicate conversation"
+                raise ValueError(
+                    f"Duplicate conversation "
+                    f"on line {line_number}."
                 )
 
-                duplicates += 1
-
-            else:
-
-                seen.add(conversation_key)
+            seen.add(signature)
 
             valid += 1
 
     # =========================
-    # Results
+    # Final check
     # =========================
 
-    print()
-    print("==============================")
-    print("MY-AI Dataset Validation")
-    print("==============================")
+    if valid == 0:
 
-    print(
-        f"Total entries : {total}"
-    )
-
-    print(
-        f"Valid entries : {valid}"
-    )
-
-    print(
-        f"Errors        : {errors}"
-    )
-
-    print(
-        f"Duplicates    : {duplicates}"
-    )
-
-    print("==============================")
-
-    if errors == 0:
-
-        print(
-            "Dataset structure looks good."
+        raise ValueError(
+            "Dataset contains no valid "
+            "conversations."
         )
 
-    else:
+    print(
+        "Dataset validation passed."
+    )
 
-        print(
-            "Dataset contains errors."
-        )
+    print(
+        f"Total entries: {total}"
+    )
+
+    print(
+        f"Valid conversations: {valid}"
+    )
 
 
 # =========================
-# Start
+# Main
 # =========================
 
 if __name__ == "__main__":
-    validate_dataset()
+
+    validate()
