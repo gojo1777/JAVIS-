@@ -1,3 +1,4 @@
+import re
 import sys
 from pathlib import Path
 
@@ -72,7 +73,37 @@ model.eval()
 
 
 # =========================
-# Generate
+# Math Solver Helper (100% Accuracy Engine)
+# =========================
+
+def solve_math_if_present(prompt):
+    """
+    ප්‍රශ්නයේ ගණිතමය සමීකරණයක් (+, -, *, /) ඇත්නම්
+    එය සොයාගෙන Python Evaluator එක හරහා 100% නිවැරදි උත්තරය සාදයි.
+    """
+    # Regex Pattern for basic math expressions (e.g., 5+5555, 10 * 20, 100/5)
+    math_pattern = r'(\d+(?:\.\d+)?\s*[\+\-\*/]\s*\d+(?:\.\d+)?(?:\s*[\+\-\*/]\s*\d+(?:\.\d+)?)*)'
+    match = re.search(math_pattern, prompt)
+
+    if match:
+        expression = match.group(1).strip()
+        try:
+            # 안전하게 expression එක evaluate කිරීම
+            result = eval(expression)
+            
+            # පූර්ණ සංඛ්‍යාවක් නම් decimal අයින් කිරීම (.0)
+            if isinstance(result, float) and result.is_integer():
+                result = int(result)
+                
+            return f"{expression} = {result}"
+        except Exception:
+            return None
+            
+    return None
+
+
+# =========================
+# Generate (LLM Model Output)
 # =========================
 
 def generate(
@@ -202,20 +233,15 @@ def generate(
 
 
 # =========================
-# Chat
+# Chat Loop
 # =========================
 
 def main():
 
-    print(
-        "MY-AI Prototype"
-    )
-
-    print(
-        "Type 'exit' to stop."
-    )
-
-    print()
+    print("===============================")
+    print(" JAVIS AI Assistant Loaded ")
+    print("===============================")
+    print("Type 'exit' to stop.\n")
 
     while True:
 
@@ -229,9 +255,14 @@ def main():
         if not prompt:
             continue
 
-        response = generate(
-            prompt
-        )
+        # 1. පළමුව Math Engine එකෙන් Check කිරීම
+        math_result = solve_math_if_present(prompt)
+
+        if math_result:
+            response = math_result
+        else:
+            # 2. ගණනක් නොවේ නම් JAVIS AI Model එකෙන් Answer එක Generate කිරීම
+            response = generate(prompt)
 
         print(
             "AI:",
