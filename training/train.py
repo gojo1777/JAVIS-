@@ -1,14 +1,39 @@
 import json
 import sys
+from pathlib import Path
 
 import torch
 import torch.nn.functional as F
-
 from torch.utils.data import DataLoader
 
 
-sys.path.append("../model")
-sys.path.append("../tokenizer")
+# =========================
+# Project paths
+# =========================
+
+ROOT_DIR = (
+    Path(__file__).resolve().parent.parent
+)
+
+MODEL_DIR = ROOT_DIR / "model"
+TOKENIZER_DIR = ROOT_DIR / "tokenizer"
+DATA_DIR = ROOT_DIR / "data"
+
+
+sys.path.insert(
+    0,
+    str(MODEL_DIR)
+)
+
+sys.path.insert(
+    0,
+    str(TOKENIZER_DIR)
+)
+
+sys.path.insert(
+    0,
+    str(Path(__file__).resolve().parent)
+)
 
 
 from transformer import MyAI
@@ -21,8 +46,13 @@ from dataset import AIDataset
 # =========================
 
 BATCH_SIZE = 4
+
 LEARNING_RATE = 3e-4
+
 EPOCHS = 10
+
+BLOCK_SIZE = 256
+
 
 DEVICE = (
     "cuda"
@@ -32,27 +62,59 @@ DEVICE = (
 
 
 # =========================
-# Load texts
+# Dataset file
+# =========================
+
+DATASET_FILE = (
+    DATA_DIR / "conversations.jsonl"
+)
+
+VOCAB_FILE = (
+    DATA_DIR / "vocab.json"
+)
+
+MODEL_FILE = (
+    ROOT_DIR / "my_ai.pt"
+)
+
+
+# =========================
+# Load training texts
 # =========================
 
 texts = []
 
 
 with open(
-    "../data/conversations.jsonl",
+    DATASET_FILE,
     "r",
     encoding="utf-8"
 ) as file:
 
     for line in file:
 
+        line = line.strip()
+
+        if not line:
+            continue
+
         item = json.loads(line)
 
-        for message in item["messages"]:
+        for message in item.get(
+            "messages",
+            []
+        ):
 
-            texts.append(
-                message["content"]
+            content = message.get(
+                "content",
+                ""
             )
+
+            if content.strip():
+
+                texts.append(
+                    content
+                )
 
 
 # =========================
@@ -61,16 +123,18 @@ with open(
 
 tokenizer = Tokenizer()
 
-tokenizer.build_vocab(texts)
+tokenizer.build_vocab(
+    texts
+)
 
 tokenizer.save(
-    "../data/vocab.json"
+    VOCAB_FILE
 )
 
 
 print(
     "Vocabulary size:",
-    len(tokenizer.vocab)
+    len(tokenizer)
 )
 
 
@@ -79,36 +143,61 @@ print(
 # =========================
 
 dataset = AIDataset(
-    "../data/conversations.jsonl",
+    DATASET_FILE,
     tokenizer,
-    block_size=256
+    block_size=BLOCK_SIZE
 )
 
+
+if len(dataset) == 0:
+
+    raise RuntimeError(
+        "Dataset contains no valid training samples."
+    )
+
+
+# =========================
+# Collate function
+# =========================
 
 def collate_fn(batch):
 
     inputs = [
-        x for x, y in batch
+        item[0]
+        for item in batch
     ]
 
     targets = [
-        y for x, y in batch
+        item[1]
+        for item in batch
     ]
 
-    inputs = torch.nn.utils.rnn.pad_sequence(
-        inputs,
-        batch_first=True,
-        padding_value=tokenizer.vocab["<PAD>"]
+    inputs = (
+        torch.nn.utils.rnn.pad_sequence(
+            inputs,
+            batch_first=True,
+            padding_value=(
+                tokenizer.vocab["<PAD>"]
+            )
+        )
     )
 
-    targets = torch.nn.utils.rnn.pad_sequence(
-        targets,
-        batch_first=True,
-        padding_value=tokenizer.vocab["<PAD>"]
+    targets = (
+        torch.nn.utils.rnn.pad_sequence(
+            targets,
+            batch_first=True,
+            padding_value=(
+                tokenizer.vocab["<PAD>"]
+            )
+        )
     )
 
     return inputs, targets
 
+
+# =========================
+# DataLoader
+# =========================
 
 loader = DataLoader(
     dataset,
@@ -123,88 +212,9 @@ loader = DataLoader(
 # =========================
 
 model = MyAI(
-    vocab_size=len(tokenizer.vocab)
+    vocab_size=len(tokenizer)
 ).to(DEVICE)
 
 
-optimizer = torch.optim.AdamW(
-    model.parameters(),
-    lr=LEARNING_RATE
-)
-
-
 # =========================
-# Training
-# =========================
-
-print(
-    "Device:",
-    DEVICE
-)
-
-print(
-    "Training samples:",
-    len(dataset)
-)
-
-print(
-    "Starting training..."
-)
-
-
-for epoch in range(EPOCHS):
-
-    total_loss = 0.0
-
-    for x, y in loader:
-
-        x = x.to(DEVICE)
-        y = y.to(DEVICE)
-
-        logits = model(x)
-
-        loss = F.cross_entropy(
-            logits.reshape(
-                -1,
-                logits.size(-1)
-            ),
-
-            y.reshape(-1),
-
-            ignore_index=(
-                tokenizer.vocab["<PAD>"]
-            )
-        )
-
-        optimizer.zero_grad()
-
-        loss.backward()
-
-        optimizer.step()
-
-        total_loss += loss.item()
-
-
-    print(
-        f"Epoch {epoch + 1}/{EPOCHS} "
-        f"Loss: {total_loss:.4f}"
-    )
-
-
-# =========================
-# Save model
-# =========================
-
-torch.save(
-    model.state_dict(),
-    "../my_ai.pt"
-)
-
-
-print(
-    "Training complete!"
-)
-
-print(
-    "Model saved as my_ai.pt"
-)
+# Optimizer
