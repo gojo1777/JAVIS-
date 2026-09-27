@@ -1,5 +1,6 @@
 import json
 import sys
+import time
 from pathlib import Path
 
 import torch
@@ -33,8 +34,17 @@ from dataset import AIDataset
 
 BATCH_SIZE = 4
 LEARNING_RATE = 3e-4
-EPOCHS = 10
+EPOCHS = 300              # tiny dataset needs many more passes to converge
 BLOCK_SIZE = 256
+GRAD_CLIP = 1.0
+
+SAMPLE_EVERY = 10         # generate a sample reply every N epochs
+LOG_EVERY = 1             # print/log loss every N epochs
+
+SAMPLE_PROMPTS = [
+    "ඔයා කවුද?",
+    "කොහොමද?",
+]
 
 DEVICE = (
     "cuda"
@@ -50,6 +60,24 @@ DEVICE = (
 DATASET_FILE = DATA_DIR / "conversations.jsonl"
 VOCAB_FILE = DATA_DIR / "vocab.json"
 MODEL_FILE = ROOT_DIR / "my_ai.pt"
+BEST_MODEL_FILE = ROOT_DIR / "my_ai_best.pt"
+LOG_FILE = ROOT_DIR / "training_log.txt"
+
+
+# =========================
+# Logging helper
+# =========================
+
+log_lines = []
+
+
+def log(message):
+
+    print(message)
+    log_lines.append(message)
+
+    with open(LOG_FILE, "a", encoding="utf-8") as file:
+        file.write(message + "\n")
 
 
 # =========================
@@ -102,11 +130,6 @@ tokenizer = Tokenizer()
 tokenizer.build_vocab(texts)
 
 tokenizer.save(VOCAB_FILE)
-
-print(
-    "Vocabulary size:",
-    len(tokenizer)
-)
 
 
 # =========================
@@ -189,19 +212,67 @@ optimizer = torch.optim.AdamW(
 
 
 # =========================
+# Sample generation (for progress checks during training)
+# =========================
+
+@torch.no_grad()
+def generate_sample(prompt, max_new_tokens=40):
+
+    model.eval()
+
+    prompt_text = "<user>\n" + prompt + "\n<assistant>\n"
+
+    ids = tokenizer.encode(prompt_text, add_bos=True)
+    idx = torch.tensor([ids], dtype=torch.long, device=DEVICE)
+
+    eos_id = tokenizer.vocab.get("<EOS>")
+    user_id = tokenizer.vocab.get("<user>")
+
+    for _ in range(max_new_tokens):
+
+        input_ids = idx[:, -BLOCK_SIZE:]
+        logits = model(input_ids)
+        next_logits = logits[:, -1, :]
+
+        # greedy decoding: clearest signal of what the model has
+        # actually learned, without sampling noise
+        next_token = torch.argmax(
+            next_logits, dim=-1, keepdim=True
+        )
+
+        idx = torch.cat([idx, next_token], dim=1)
+
+        token_id = next_token.item()
+
+        if token_id in (eos_id, user_id):
+            break
+
+    generated_ids = idx[0].tolist()[len(ids):]
+
+    clean_ids = []
+    for token_id in generated_ids:
+        if token_id in (eos_id, user_id):
+            break
+        clean_ids.append(token_id)
+
+    model.train()
+
+    return tokenizer.decode(clean_ids).strip()
+
+
+# =========================
 # Information
 # =========================
 
-print()
-print("==============================")
-print("MY-AI Training")
-print("==============================")
-print("Device:", DEVICE)
-print("Training samples:", len(dataset))
-print("Vocabulary:", len(tokenizer))
-print("Epochs:", EPOCHS)
-print("==============================")
-print()
+log("==============================")
+log("MY-AI Training")
+log("==============================")
+log(f"Device: {DEVICE}")
+log(f"Training samples: {len(dataset)}")
+log(f"Vocabulary: {len(tokenizer)}")
+log(f"Epochs: {EPOCHS}")
+log("==============================")
+log("")
 
 
 # =========================
@@ -210,6 +281,8 @@ print()
 
 model.train()
 
+best_loss = float("inf")
+start_time = time.time()
 
 for epoch in range(EPOCHS):
 
@@ -238,27 +311,53 @@ for epoch in range(EPOCHS):
 
         loss.backward()
 
+        # gradient clipping: keeps training stable on a small,
+        # noisy dataset where a single batch can otherwise cause
+        # a large, destabilizing update
+        torch.nn.utils.clip_grad_norm_(
+            model.parameters(), GRAD_CLIP
+        )
+
         optimizer.step()
 
         total_loss += loss.item()
         batches += 1
 
-    average_loss = (
-        total_loss / batches
-    )
+    average_loss = total_loss / batches
 
-    print(
-        f"Epoch {epoch + 1}/{EPOCHS}"
-        f" - Loss: {average_loss:.4f}"
-    )
+    if (epoch + 1) % LOG_EVERY == 0 or epoch == EPOCHS - 1:
+        elapsed = time.time() - start_time
+        log(
+            f"Epoch {epoch + 1}/{EPOCHS} "
+            f"- Loss: {average_loss:.4f} "
+            f"- Elapsed: {elapsed:.1f}s"
+        )
+
+    # =========================
+    # Save best checkpoint so far
+    # =========================
+
+    if average_loss < best_loss:
+        best_loss = average_loss
+        torch.save(model.state_dict(), BEST_MODEL_FILE)
+
+    # =========================
+    # Periodic qualitative check
+    # =========================
+
+    if (epoch + 1) % SAMPLE_EVERY == 0 or epoch == EPOCHS - 1:
+        for prompt in SAMPLE_PROMPTS:
+            sample = generate_sample(prompt)
+            log(f"    [sample] {prompt!r} -> {sample!r}")
+        log("")
 
 
 # =========================
-# Save model
+# Save final model
 # =========================
 
-print()
-print("Saving model...")
+log("")
+log("Saving final model...")
 
 torch.save(
     model.state_dict(),
@@ -286,23 +385,12 @@ if not VOCAB_FILE.exists():
     )
 
 
-print()
-print("==============================")
-print("Training complete!")
-print("==============================")
-
-print(
-    "Model file:",
-    MODEL_FILE
-)
-
-print(
-    "Model size:",
-    MODEL_FILE.stat().st_size,
-    "bytes"
-)
-
-print(
-    "Vocabulary file:",
-    VOCAB_FILE
-)
+log("")
+log("==============================")
+log("Training complete!")
+log("==============================")
+log(f"Final model file: {MODEL_FILE}")
+log(f"Best model file (lowest loss): {BEST_MODEL_FILE} (loss {best_loss:.4f})")
+log(f"Model size: {MODEL_FILE.stat().st_size} bytes")
+log(f"Vocabulary file: {VOCAB_FILE}")
+log(f"Training log: {LOG_FILE}")
