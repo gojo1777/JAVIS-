@@ -12,19 +12,22 @@ class Tokenizer:
             "<UNK>",
             "<BOS>",
             "<EOS>",
+            "<user>",
+            "<assistant>",
+            "<system>",
         ]
 
         self.vocab = {}
         self.id_to_token = {}
 
     # =========================
-    # Split text into tokens
+    # Tokenize
     # =========================
 
     def tokenize(self, text):
 
         return re.findall(
-            r"\w+|[^\w\s]",
+            r"<[^>]+>|\w+|[^\w\s]",
             text,
             re.UNICODE
         )
@@ -35,37 +38,35 @@ class Tokenizer:
 
     def build_vocab(self, texts):
 
-        token_counts = {}
+        token_set = set()
 
         for text in texts:
 
             tokens = self.tokenize(text)
 
-            for token in tokens:
+            token_set.update(tokens)
 
-                token_counts[token] = (
-                    token_counts.get(token, 0) + 1
-                )
-
-        sorted_tokens = sorted(
-            token_counts.keys()
+        normal_tokens = sorted(
+            token
+            for token in token_set
+            if token not in self.special_tokens
         )
 
         all_tokens = (
             self.special_tokens
-            + sorted_tokens
+            + normal_tokens
         )
 
         self.vocab = {
             token: index
-            for index, token in enumerate(
-                all_tokens
-            )
+            for index, token
+            in enumerate(all_tokens)
         }
 
         self.id_to_token = {
             index: token
-            for token, index in self.vocab.items()
+            for token, index
+            in self.vocab.items()
         }
 
     # =========================
@@ -84,20 +85,22 @@ class Tokenizer:
         ids = []
 
         if add_bos:
+
             ids.append(
                 self.vocab["<BOS>"]
             )
 
         for token in tokens:
 
-            token_id = self.vocab.get(
-                token,
-                self.vocab["<UNK>"]
+            ids.append(
+                self.vocab.get(
+                    token,
+                    self.vocab["<UNK>"]
+                )
             )
 
-            ids.append(token_id)
-
         if add_eos:
+
             ids.append(
                 self.vocab["<EOS>"]
             )
@@ -119,7 +122,11 @@ class Tokenizer:
                 "<UNK>"
             )
 
-            if token in self.special_tokens:
+            if token in {
+                "<PAD>",
+                "<BOS>",
+                "<EOS>",
+            }:
                 continue
 
             tokens.append(token)
@@ -166,7 +173,7 @@ class Tokenizer:
         return text
 
     # =========================
-    # Save vocabulary
+    # Save
     # =========================
 
     def save(self, path):
@@ -192,7 +199,7 @@ class Tokenizer:
             )
 
     # =========================
-    # Load vocabulary
+    # Load
     # =========================
 
     def load(self, path):
