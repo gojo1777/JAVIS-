@@ -1,5 +1,5 @@
 import json
-import re
+import regex as re
 
 
 class Tokenizer:
@@ -33,7 +33,7 @@ class Tokenizer:
             r"<UNK>|"
             r"<BOS>|"
             r"<EOS>|"
-            r"\w+|"
+            r"[\w\p{M}]+|"
             r"[^\w\s]"
         )
 
@@ -85,7 +85,7 @@ class Tokenizer:
             r"<UNK>|"
             r"<BOS>|"
             r"<EOS>|"
-            r"\w+|"
+            r"[\w\p{M}]+|"
             r"[^\w\s]"
         )
 
