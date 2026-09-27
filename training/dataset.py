@@ -1,6 +1,5 @@
 import json
 import torch
-
 from torch.utils.data import Dataset
 
 
@@ -35,7 +34,14 @@ class AIDataset(Dataset):
                     []
                 )
 
-                text_parts = []
+                if not messages:
+                    continue
+
+                # =========================
+                # Build conversation
+                # =========================
+
+                conversation = ""
 
                 for message in messages:
 
@@ -52,24 +58,31 @@ class AIDataset(Dataset):
                     if not content:
                         continue
 
-                    # Make roles visible to the model
-                    text_parts.append(
-                        f"<{role}>"
-                    )
+                    if role == "user":
 
-                    text_parts.append(
-                        content
-                    )
+                        conversation += (
+                            "<user>\n"
+                            + content
+                            + "\n"
+                        )
 
-                if not text_parts:
+                    elif role == "assistant":
+
+                        conversation += (
+                            "<assistant>\n"
+                            + content
+                            + "\n"
+                        )
+
+                if not conversation.strip():
                     continue
 
-                text = "\n".join(
-                    text_parts
-                )
+                # =========================
+                # Tokenize
+                # =========================
 
                 tokens = tokenizer.encode(
-                    text,
+                    conversation,
                     add_bos=True,
                     add_eos=True
                 )
@@ -77,20 +90,33 @@ class AIDataset(Dataset):
                 if len(tokens) < 2:
                     continue
 
-                # Keep one training sequence
+                # =========================
+                # Limit sequence length
+                # =========================
+
                 tokens = tokens[
                     :block_size + 1
                 ]
 
-                if len(tokens) >= 2:
+                # =========================
+                # Store
+                # =========================
 
-                    self.samples.append(
-                        tokens
-                    )
+                self.samples.append(
+                    tokens
+                )
+
+    # =========================
+    # Dataset length
+    # =========================
 
     def __len__(self):
 
         return len(self.samples)
+
+    # =========================
+    # Get sample
+    # =========================
 
     def __getitem__(self, index):
 
