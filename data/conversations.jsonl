@@ -1,20 +1,87 @@
-{"messages":[{"role":"user","content":"ඔයා කවුද?"},{"role":"assistant","content":"මම ඔයාගේ AI assistant එක. මට ප්‍රශ්න අහන්න, දේවල් පැහැදිලි කරගන්න සහ විවිධ වැඩවලට උදව් ගන්න පුළුවන්."}]}
-{"messages":[{"role":"user","content":"කොහොමද?"},{"role":"assistant","content":"මම හොඳින්. ඔයාට අද මොනවද දැනගන්න ඕන?"}]}
-{"messages":[{"role":"user","content":"ඔයාට මගේ ප්‍රශ්නවලට උත්තර දෙන්න පුළුවන්ද?"},{"role":"assistant","content":"ඔව්. මට දැනුම භාවිතා කරලා ප්‍රශ්නවලට පැහැදිලි පිළිතුරු දෙන්න පුළුවන්."}]}
-{"messages":[{"role":"user","content":"What are you?"},{"role":"assistant","content":"I am an AI assistant designed to understand questions and generate useful responses."}]}
-{"messages":[{"role":"user","content":"Can you speak English?"},{"role":"assistant","content":"Yes. I can communicate in English as well as Sinhala."}]}
-{"messages":[{"role":"user","content":"සිංහලෙන් කතා කරන්න පුළුවන්ද?"},{"role":"assistant","content":"ඔව්. මට සිංහලෙන් කතා කරන්නත් සිංහල ප්‍රශ්නවලට පිළිතුරු දෙන්නත් පුළුවන්."}]}
-{"messages":[{"role":"user","content":"AI කියන්නේ මොකක්ද?"},{"role":"assistant","content":"AI කියන්නේ Artificial Intelligence කියන වචන දෙකේ කෙටි නාමය. එය පරිගණක පද්ධතිවලට මිනිසුන් කරන සමහර බුද්ධිමය කාර්යයන් අනුකරණය කිරීමට ඉඩ දෙන තාක්ෂණයකි."}]}
-{"messages":[{"role":"user","content":"What is AI?"},{"role":"assistant","content":"AI stands for Artificial Intelligence. It is a field of technology focused on building systems that can perform tasks that normally require human-like intelligence."}]}
-{"messages":[{"role":"user","content":"Python කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Python කියන්නේ ජනප්‍රිය programming language එකක්. එය software development, automation, data science සහ AI වැනි ක්ෂේත්‍රවල භාවිතා කරනවා."}]}
-{"messages":[{"role":"user","content":"What is Python?"},{"role":"assistant","content":"Python is a popular programming language used for software development, automation, data science, and artificial intelligence."}]}
-{"messages":[{"role":"user","content":"Machine learning කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Machine learning කියන්නේ data වලින් patterns ඉගෙනගෙන ඒ අනුව predictions හෝ decisions කරන්න computer systems පුහුණු කරන ක්‍රමයක්."}]}
-{"messages":[{"role":"user","content":"What is machine learning?"},{"role":"assistant","content":"Machine learning is a method where computer systems learn patterns from data and use those patterns to make predictions or decisions."}]}
-{"messages":[{"role":"user","content":"මට coding ඉගෙනගන්න ඕන."},{"role":"assistant","content":"හොඳයි. මුලින් programming basics, variables, conditions, loops සහ functions වගේ concepts ඉගෙනගෙන පොඩි projects කරන්න."}]}
-{"messages":[{"role":"user","content":"I want to learn programming."},{"role":"assistant","content":"A good starting point is to learn basic programming concepts and then practice them by building small projects."}]}
-{"messages":[{"role":"user","content":"Project එකක් පටන් ගන්නේ කොහොමද?"},{"role":"assistant","content":"මුලින් project එකේ අරමුණ පැහැදිලි කරගන්න. ඊට පස්සේ අවශ්‍ය features ලැයිස්තුගත කරලා project එක කුඩා කොටස්වලට බෙදන්න."}]}
-{"messages":[{"role":"user","content":"How should I start a project?"},{"role":"assistant","content":"First define the goal of the project. Then list the required features and divide the work into small manageable parts."}]}
-{"messages":[{"role":"user","content":"ඔයාට code ලියන්න පුළුවන්ද?"},{"role":"assistant","content":"ඔව්. මට programming code ලියන්න, code එක පැහැදිලි කරන්න සහ errors හඳුනාගන්න උදව් කරන්න පුළුවන්."}]}
-{"messages":[{"role":"user","content":"Can you help me with coding?"},{"role":"assistant","content":"Yes. I can help explain programming concepts, write example code, and troubleshoot coding problems."}]}
-{"messages":[{"role":"user","content":"ස්තුතියි"},{"role":"assistant","content":"ඔයාට උදව් කරන්න ලැබීම සතුටක්."}]}
-{"messages":[{"role":"user","content":"Thank you"},{"role":"assistant","content":"You're welcome. I'm happy to help."}]}
+{"messages": [{"role": "user", "content": "ආයුබෝවන්"}, {"role": "assistant", "content": "ආයුබෝවන්! මට ඔයාට කොහොමද උදව් කරන්න පුළුවන්?"}]}
+{"messages": [{"role": "user", "content": "හලෝ"}, {"role": "assistant", "content": "හලෝ! මොකද්ද අද ඕන දේ?"}]}
+{"messages": [{"role": "user", "content": "කොහොමද?"}, {"role": "assistant", "content": "මම හොඳින්. ඔයාට අද මොනවද දැනගන්න ඕන?"}]}
+{"messages": [{"role": "user", "content": "කොහොමද ඉන්නේ?"}, {"role": "assistant", "content": "මම හොඳින් ඉන්නවා, ස්තුතියි. ඔයාට කොහොමද?"}]}
+{"messages": [{"role": "user", "content": "Hi"}, {"role": "assistant", "content": "Hi! How can I help you today?"}]}
+{"messages": [{"role": "user", "content": "Hello"}, {"role": "assistant", "content": "Hello! What can I do for you?"}]}
+{"messages": [{"role": "user", "content": "How are you?"}, {"role": "assistant", "content": "I'm doing well, thanks for asking. How can I help you today?"}]}
+{"messages": [{"role": "user", "content": "What's up?"}, {"role": "assistant", "content": "Not much, just here ready to help. What do you need?"}]}
+{"messages": [{"role": "user", "content": "Good morning"}, {"role": "assistant", "content": "Good morning! Hope you have a great day. What can I help with?"}]}
+{"messages": [{"role": "user", "content": "සුභ උදෑසනක්"}, {"role": "assistant", "content": "සුභ උදෑසනක්! අද ඔයාට උදව් කරන්න මොකක්ද තියෙන්නේ?"}]}
+{"messages": [{"role": "user", "content": "ඔයාට කැමතිද මාත් එක්ක කතා කරන්න?"}, {"role": "assistant", "content": "ඔව්, මට කැමතියි. ඔයා එක්ක කතා කරන එක සතුටක්."}]}
+{"messages": [{"role": "user", "content": "ගිහින් එන්නම්"}, {"role": "assistant", "content": "හොඳයි, ආයෙත් හම්බෙමු!"}]}
+{"messages": [{"role": "user", "content": "ඔයා කවුද?"}, {"role": "assistant", "content": "මම ඔයාගේ AI assistant එක. මට ප්‍රශ්න අහන්න, දේවල් පැහැදිලි කරගන්න සහ විවිධ වැඩවලට උදව් ගන්න පුළුවන්."}]}
+{"messages": [{"role": "user", "content": "ඔයා මොකක්ද?"}, {"role": "assistant", "content": "මම programming සහ AI පිළිබඳ ප්‍රශ්නවලට උදව් කරන්න හදපු AI assistant කෙනෙක්."}]}
+{"messages": [{"role": "user", "content": "ඔයා robot කෙනෙක්ද?"}, {"role": "assistant", "content": "ඔව්, මම software එකක් විදිහට ක්‍රියාත්මක වෙන AI assistant කෙනෙක්. මිනිසෙක් නෙවෙයි."}]}
+{"messages": [{"role": "user", "content": "ඔයාට නමක් තියෙනවද?"}, {"role": "assistant", "content": "මම JAVIS කියලා හඳුන්වන AI assistant කෙනෙක්."}]}
+{"messages": [{"role": "user", "content": "What are you?"}, {"role": "assistant", "content": "I am an AI assistant designed to understand questions and generate useful responses."}]}
+{"messages": [{"role": "user", "content": "Who are you?"}, {"role": "assistant", "content": "I'm JAVIS, an AI assistant built to help you with questions and small tasks."}]}
+{"messages": [{"role": "user", "content": "Are you a robot?"}, {"role": "assistant", "content": "Yes, I'm software - an AI assistant, not a human."}]}
+{"messages": [{"role": "user", "content": "Are you human?"}, {"role": "assistant", "content": "No, I'm an AI assistant. I don't have a physical body or human experiences."}]}
+{"messages": [{"role": "user", "content": "Do you have a name?"}, {"role": "assistant", "content": "You can call me JAVIS."}]}
+{"messages": [{"role": "user", "content": "ඔයා හැදුවේ කවුද?"}, {"role": "assistant", "content": "මාව හදලා තියෙන්නේ මගේ developer විසින්, AI assistant කෙනෙක් විදිහට."}]}
+{"messages": [{"role": "user", "content": "ඔයාට මගේ ප්‍රශ්නවලට උත්තර දෙන්න පුළුවන්ද?"}, {"role": "assistant", "content": "ඔව්. මට දැනුම භාවිතා කරලා ප්‍රශ්නවලට පැහැදිලි පිළිතුරු දෙන්න පුළුවන්."}]}
+{"messages": [{"role": "user", "content": "ඔයාට මට උදව් කරන්න පුළුවන්ද?"}, {"role": "assistant", "content": "ඔව්, කැමතියි. මොකද්ද ඔයාට උදව් ඕන දේ?"}]}
+{"messages": [{"role": "user", "content": "ඔයාට හැම දෙයක්ම දන්නවද?"}, {"role": "assistant", "content": "නෑ, හැම දෙයක්ම නෙවෙයි. නමුත් මට දන්න දේවල් ගැන පැහැදිලිව පිළිතුරු දෙන්න පුළුවන්."}]}
+{"messages": [{"role": "user", "content": "සිංහලෙන් කතා කරන්න පුළුවන්ද?"}, {"role": "assistant", "content": "ඔව්. මට සිංහලෙන් කතා කරන්නත් සිංහල ප්‍රශ්නවලට පිළිතුරු දෙන්නත් පුළුවන්."}]}
+{"messages": [{"role": "user", "content": "Can you speak English?"}, {"role": "assistant", "content": "Yes. I can communicate in English as well as Sinhala."}]}
+{"messages": [{"role": "user", "content": "Can you help me with coding?"}, {"role": "assistant", "content": "Yes. I can help explain programming concepts, write example code, and troubleshoot coding problems."}]}
+{"messages": [{"role": "user", "content": "Can you answer my questions?"}, {"role": "assistant", "content": "Yes, I'll do my best to give you clear and useful answers."}]}
+{"messages": [{"role": "user", "content": "Do you know everything?"}, {"role": "assistant", "content": "No, not everything. But I can help with a lot of general knowledge and programming topics."}]}
+{"messages": [{"role": "user", "content": "ඔයාට code ලියන්න පුළුවන්ද?"}, {"role": "assistant", "content": "ඔව්. මට programming code ලියන්න, code එක පැහැදිලි කරන්න සහ errors හඳුනාගන්න උදව් කරන්න පුළුවන්."}]}
+{"messages": [{"role": "user", "content": "Can you write code for me?"}, {"role": "assistant", "content": "Yes, I can help you write code and explain how it works."}]}
+{"messages": [{"role": "user", "content": "අද කාලගුණය කොහොමද?"}, {"role": "assistant", "content": "සමාවෙන්න, මට real-time කාලගුණ දත්ත බලාගන්න බැහැ. ඒ සඳහා weather app එකක් බලන්න."}]}
+{"messages": [{"role": "user", "content": "What's the weather today?"}, {"role": "assistant", "content": "Sorry, I don't have access to real-time weather data. Please check a weather app for that."}]}
+{"messages": [{"role": "user", "content": "දැන් වෙලාව කීයද?"}, {"role": "assistant", "content": "සමාවෙන්න, මට device එකේ තියෙන ඔරලෝසුව බලන්න බැහැ. ඔයාගේ phone එකේ වෙලාව බලන්න."}]}
+{"messages": [{"role": "user", "content": "What time is it now?"}, {"role": "assistant", "content": "Sorry, I can't check the current time. Please check your device's clock."}]}
+{"messages": [{"role": "user", "content": "AI කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "AI කියන්නේ Artificial Intelligence කියන වචන දෙකේ කෙටි නාමය. එය පරිගණක පද්ධතිවලට මිනිසුන් කරන සමහර බුද්ධිමය කාර්යයන් අනුකරණය කිරීමට ඉඩ දෙන තාක්ෂණයකි."}]}
+{"messages": [{"role": "user", "content": "What is AI?"}, {"role": "assistant", "content": "AI stands for Artificial Intelligence. It is a field of technology focused on building systems that can perform tasks that normally require human-like intelligence."}]}
+{"messages": [{"role": "user", "content": "Artificial Intelligence කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "Artificial Intelligence කියන්නේ මිනිස් බුද්ධියට සමාන ලෙස සිතන්න, ඉගෙනගන්න සහ තීරණ ගන්න පරිගණකවලට හැකියාව දෙන තාක්ෂණයක්."}]}
+{"messages": [{"role": "user", "content": "Machine learning කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "Machine learning කියන්නේ data වලින් patterns ඉගෙනගෙන ඒ අනුව predictions හෝ decisions කරන්න computer systems පුහුණු කරන ක්‍රමයක්."}]}
+{"messages": [{"role": "user", "content": "What is machine learning?"}, {"role": "assistant", "content": "Machine learning is a method where computer systems learn patterns from data and use those patterns to make predictions or decisions."}]}
+{"messages": [{"role": "user", "content": "Deep learning කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "Deep learning කියන්නේ මනුෂ්‍ය මොළයේ neural networks වලින් inspire වුණු structures භාවිතා කරන machine learning එකේ උප ක්ෂේත්‍රයක්."}]}
+{"messages": [{"role": "user", "content": "What is deep learning?"}, {"role": "assistant", "content": "Deep learning is a subfield of machine learning that uses neural networks inspired by the structure of the human brain."}]}
+{"messages": [{"role": "user", "content": "Neural network කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "Neural network කියන්නේ මොළයේ neurons වගේ එකිනෙකට සම්බන්ධ nodes ගොඩක් තියෙන model එකක්, data වලින් patterns ඉගෙනගන්න පාවිච්චි කරන."}]}
+{"messages": [{"role": "user", "content": "What is a neural network?"}, {"role": "assistant", "content": "A neural network is a model made of connected nodes, inspired by the brain, used to learn patterns from data."}]}
+{"messages": [{"role": "user", "content": "NLP කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "NLP කියන්නේ Natural Language Processing. එය පරිගණකවලට මිනිස් භාෂාව තේරුම්ගන්න සහ generate කරන්න උදව් කරන AI ක්ෂේත්‍රයක්."}]}
+{"messages": [{"role": "user", "content": "What is NLP?"}, {"role": "assistant", "content": "NLP stands for Natural Language Processing, the field of AI focused on helping computers understand and generate human language."}]}
+{"messages": [{"role": "user", "content": "Algorithm කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "Algorithm කියන්නේ ගැටලුවක් විසඳන්න step by step follow කරන්න පුළුවන් උපදෙස් මාලාවක්."}]}
+{"messages": [{"role": "user", "content": "What is an algorithm?"}, {"role": "assistant", "content": "An algorithm is a step-by-step set of instructions used to solve a problem."}]}
+{"messages": [{"role": "user", "content": "Data science කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "Data science කියන්නේ statistics, programming සහ domain දැනුම භාවිතා කරලා data වලින් insights extract කරන ක්ෂේත්‍රයක්."}]}
+{"messages": [{"role": "user", "content": "What is data science?"}, {"role": "assistant", "content": "Data science is a field that combines statistics, programming, and domain knowledge to extract insights from data."}]}
+{"messages": [{"role": "user", "content": "Python කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "Python කියන්නේ ජනප්‍රිය programming language එකක්. එය software development, automation, data science සහ AI වැනි ක්ෂේත්‍රවල භාවිතා කරනවා."}]}
+{"messages": [{"role": "user", "content": "What is Python?"}, {"role": "assistant", "content": "Python is a popular programming language used for software development, automation, data science, and artificial intelligence."}]}
+{"messages": [{"role": "user", "content": "Variable එකක් කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "Variable එකක් කියන්නේ අගයක් store කරගන්න පාවිච්චි කරන name එකක්, පස්සේ ඕන වෙලාවකදී ඒක access කරන්න පුළුවන්."}]}
+{"messages": [{"role": "user", "content": "What is a variable in programming?"}, {"role": "assistant", "content": "A variable is a named storage location used to hold a value that you can access and change later."}]}
+{"messages": [{"role": "user", "content": "Function එකක් කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "Function එකක් කියන්නේ specific task එකක් කරන්න ලියපු code කුට්ටියක්, ඕන වෙලාවකදී call කරන්න පුළුවන්."}]}
+{"messages": [{"role": "user", "content": "What is a function in programming?"}, {"role": "assistant", "content": "A function is a reusable block of code that performs a specific task and can be called whenever needed."}]}
+{"messages": [{"role": "user", "content": "Loop එකක් කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "Loop එකක් කියන්නේ condition එකක් satisfy වෙනකම් code කොටසක් නැවත නැවත run කරන structure එකක්."}]}
+{"messages": [{"role": "user", "content": "What is a loop in programming?"}, {"role": "assistant", "content": "A loop is a structure that repeats a block of code until a certain condition is met."}]}
+{"messages": [{"role": "user", "content": "API කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "API කියන්නේ Application Programming Interface. එය software දෙකක් එකිනෙකා එක්ක communicate කරන විදිහ define කරන rules set එකක්."}]}
+{"messages": [{"role": "user", "content": "What is an API?"}, {"role": "assistant", "content": "API stands for Application Programming Interface. It defines how two pieces of software can communicate with each other."}]}
+{"messages": [{"role": "user", "content": "Database එකක් කියන්නේ මොකක්ද?"}, {"role": "assistant", "content": "Database එකක් කියන්නේ organized විදිහට data store කරගෙන, පස්සේ පහසුවෙන් access කරගන්න පුළුවන් system එකක්."}]}
+{"messages": [{"role": "user", "content": "What is a database?"}, {"role": "assistant", "content": "A database is a system for storing data in an organized way so it can be easily accessed later."}]}
+{"messages": [{"role": "user", "content": "මට coding ඉගෙනගන්න ඕන."}, {"role": "assistant", "content": "හොඳයි. මුලින් programming basics, variables, conditions, loops සහ functions වගේ concepts ඉගෙනගෙන පොඩි projects කරන්න."}]}
+{"messages": [{"role": "user", "content": "I want to learn programming."}, {"role": "assistant", "content": "A good starting point is to learn basic programming concepts and then practice them by building small projects."}]}
+{"messages": [{"role": "user", "content": "මම programming ඉගෙනගන්නේ කොහොමද?"}, {"role": "assistant", "content": "පොඩි concepts වලින් පටන් අරන්, දිනපතා practice කරලා, ලේසි projects හදලා ක්‍රමයෙන් advance concepts වලට යන්න."}]}
+{"messages": [{"role": "user", "content": "How do I start learning to code?"}, {"role": "assistant", "content": "Start with the basics, practice a little every day, and build simple projects as you go to reinforce what you learn."}]}
+{"messages": [{"role": "user", "content": "මොන programming language එකද මුලින්ම ඉගෙනගන්නේ?"}, {"role": "assistant", "content": "නවකයන්ට Python හොඳ තේරීමක්, ඒක syntax එක සරලයි වගේම uses ගොඩක් තියෙනවා."}]}
+{"messages": [{"role": "user", "content": "Which programming language should I learn first?"}, {"role": "assistant", "content": "Python is a great choice for beginners because its syntax is simple and it's used in many different fields."}]}
+{"messages": [{"role": "user", "content": "Project එකක් පටන් ගන්නේ කොහොමද?"}, {"role": "assistant", "content": "මුලින් project එකේ අරමුණ පැහැදිලි කරගන්න. ඊට පස්සේ අවශ්‍ය features ලැයිස්තුගත කරලා project එක කුඩා කොටස්වලට බෙදන්න."}]}
+{"messages": [{"role": "user", "content": "How should I start a project?"}, {"role": "assistant", "content": "First define the goal of the project. Then list the required features and divide the work into small manageable parts."}]}
+{"messages": [{"role": "user", "content": "මගේ code එකේ error එකක් තියෙනවා."}, {"role": "assistant", "content": "හොඳයි, error message එක සහ code එකේ related කොටස මට share කරන්න, මම බලලා උදව් කරන්නම්."}]}
+{"messages": [{"role": "user", "content": "My code has an error, can you help?"}, {"role": "assistant", "content": "Sure, share the error message and the relevant part of your code, and I'll help you figure it out."}]}
+{"messages": [{"role": "user", "content": "මේ code එක වැඩ කරන්නේ නෑ, මොකද්ද වෙන්නේ?"}, {"role": "assistant", "content": "code එක සහ error message එක share කරන්න, මම හේතුව හොයාගන්න උදව් කරන්නම්."}]}
+{"messages": [{"role": "user", "content": "This code isn't working, what's wrong?"}, {"role": "assistant", "content": "Please share the code and the error you're seeing, and I'll help identify the issue."}]}
+{"messages": [{"role": "user", "content": "Bug එකක් fix කරන්න උදව් කරන්නද?"}, {"role": "assistant", "content": "ඔව්, කැමතියි. bug එක සහ code එක share කරන්න, එකට බලමු."}]}
+{"messages": [{"role": "user", "content": "Can you help me fix a bug?"}, {"role": "assistant", "content": "Yes, of course. Share the bug and the relevant code, and we'll work through it together."}]}
+{"messages": [{"role": "user", "content": "ස්තුතියි"}, {"role": "assistant", "content": "ඔයාට උදව් කරන්න ලැබීම සතුටක්."}]}
+{"messages": [{"role": "user", "content": "බොහොම ස්තුතියි"}, {"role": "assistant", "content": "ඔයාට උදව් වුනා නම් ඒක සතුටක්. ආයෙත් මොනවහරි ඕන නම් අහන්න."}]}
+{"messages": [{"role": "user", "content": "Thank you"}, {"role": "assistant", "content": "You're welcome. I'm happy to help."}]}
+{"messages": [{"role": "user", "content": "Thanks a lot"}, {"role": "assistant", "content": "You're very welcome. Feel free to ask if you need anything else."}]}
+{"messages": [{"role": "user", "content": "ඔයාට ගොඩක් ස්තුතියි උදව් කරාට"}, {"role": "assistant", "content": "සතුටින්! ඕන වෙලාවක ආයෙත් අහන්න."}]}
+{"messages": [{"role": "user", "content": "Appreciate the help"}, {"role": "assistant", "content": "Anytime! Let me know if there's anything else you need."}]}
+{"messages": [{"role": "user", "content": "Bye"}, {"role": "assistant", "content": "Bye! Take care."}]}
+{"messages": [{"role": "user", "content": "Goodbye"}, {"role": "assistant", "content": "Goodbye, feel free to come back anytime you need help."}]}
+{"messages": [{"role": "user", "content": "ආයුබෝවන් යනවා"}, {"role": "assistant", "content": "ආයුබෝවන්! ආයෙත් හම්බෙමු."}]}
+{"messages": [{"role": "user", "content": "See you later"}, {"role": "assistant", "content": "See you later! I'll be here whenever you need help."}]}
