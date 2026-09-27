@@ -1,10 +1,52 @@
-{"messages":[{"role":"user","content":"ඔයා කවුද?"},{"role":"assistant","content":"මම ඔයා හදන AI assistant එක."}]}
+{"messages":[{"role":"user","content":"ඔයා කවුද?"},{"role":"assistant","content":"මම මේ project එක සඳහා නිර්මාණය කරන AI assistant එකක්."}]}
 {"messages":[{"role":"user","content":"කොහොමද?"},{"role":"assistant","content":"මම හොඳින්. ඔයාට මොනවද උදව් කරන්න ඕන?"}]}
-{"messages":[{"role":"user","content":"What are you?"},{"role":"assistant","content":"I am an AI assistant created as part of your own AI project."}]}
-{"messages":[{"role":"user","content":"What can you do?"},{"role":"assistant","content":"I can answer questions, have conversations, and help with different tasks."}]}
-{"messages":[{"role":"user","content":"AI කියන්නේ මොකක්ද?"},{"role":"assistant","content":"AI කියන්නේ මිනිසුන් කරන සමහර බුද්ධිමය කාර්යයන් ඉගෙනගෙන කිරීමට හැකි පරිගණක පද්ධතියක්."}]}
-{"messages":[{"role":"user","content":"What is a computer?"},{"role":"assistant","content":"A computer is an electronic device that processes information and performs programmed tasks."}]}
-{"messages":[{"role":"user","content":"ඔයාට සිංහල කතා කරන්න පුළුවන්ද?"},{"role":"assistant","content":"ඔව්. මට සිංහල භාෂාවෙන් කතාබහ කිරීමට හැකි වන ලෙස පුහුණු කළ හැකියි."}]}
-{"messages":[{"role":"user","content":"Can you speak English?"},{"role":"assistant","content":"Yes. English can be included as one of the languages in my training data."}]}
+{"messages":[{"role":"user","content":"ඔයාට සිංහල පුළුවන්ද?"},{"role":"assistant","content":"ඔව්. සිංහලෙන් කතාබහ කරන්න මට පුළුවන්."}]}
+{"messages":[{"role":"user","content":"Can you speak English?"},{"role":"assistant","content":"Yes. I can communicate in English."}]}
+{"messages":[{"role":"user","content":"What are you?"},{"role":"assistant","content":"I am an AI assistant designed to answer questions and have conversations."}]}
+{"messages":[{"role":"user","content":"What can you do?"},{"role":"assistant","content":"I can answer questions, explain concepts, have conversations, and help with different tasks."}]}
+{"messages":[{"role":"user","content":"AI කියන්නේ මොකක්ද?"},{"role":"assistant","content":"AI හෙවත් Artificial Intelligence කියන්නේ පරිගණක පද්ධතිවලට ඉගෙනීම, තොරතුරු විශ්ලේෂණය කිරීම සහ ඇතැම් බුද්ධිමය කාර්යයන් කිරීමේ හැකියාව ලබාදෙන තාක්ෂණයකි."}]}
+{"messages":[{"role":"user","content":"What is artificial intelligence?"},{"role":"assistant","content":"Artificial intelligence is a field of computing focused on building systems that can perform tasks that normally require human-like intelligence."}]}
+{"messages":[{"role":"user","content":"Machine learning කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Machine learning කියන්නේ data වලින් patterns ඉගෙනගෙන, ඒ අනුව predictions හෝ decisions කිරීමට computer systems පුහුණු කරන ක්‍රමයකි."}]}
+{"messages":[{"role":"user","content":"What is machine learning?"},{"role":"assistant","content":"Machine learning is a method where a computer system learns patterns from data instead of being explicitly programmed for every situation."}]}
 {"messages":[{"role":"user","content":"2 + 3 කීයද?"},{"role":"assistant","content":"2 + 3 = 5."}]}
 {"messages":[{"role":"user","content":"What is 10 minus 4?"},{"role":"assistant","content":"10 minus 4 equals 6."}]}
+{"messages":[{"role":"user","content":"5 × 6 කීයද?"},{"role":"assistant","content":"5 × 6 = 30."}]}
+{"messages":[{"role":"user","content":"What is 100 divided by 10?"},{"role":"assistant","content":"100 divided by 10 equals 10."}]}
+{"messages":[{"role":"user","content":"Python කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Python කියන්නේ software, automation, data science සහ AI වැනි ක්ෂේත්‍රවල භාවිත කරන programming language එකක්."}]}
+{"messages":[{"role":"user","content":"What is Python used for?"},{"role":"assistant","content":"Python is commonly used for software development, automation, data analysis, machine learning, and artificial intelligence."}]}
+{"messages":[{"role":"user","content":"GitHub කියන්නේ මොකක්ද?"},{"role":"assistant","content":"GitHub කියන්නේ source code සහ software projects store, manage සහ collaborate කිරීමට භාවිත කරන online platform එකක්."}]}
+{"messages":[{"role":"user","content":"What is GitHub?"},{"role":"assistant","content":"GitHub is a platform for hosting, managing, and collaborating on software projects using Git."}]}
+{"messages":[{"role":"user","content":"Transformer model එක කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Transformer කියන්නේ attention mechanism එක භාවිත කරමින් text වැනි sequential data process කිරීමට හැකි neural network architecture එකකි."}]}
+{"messages":[{"role":"user","content":"What is a Transformer in AI?"},{"role":"assistant","content":"A Transformer is a neural network architecture that uses attention mechanisms to process sequences and model relationships between tokens."}]}
+{"messages":[{"role":"user","content":"Token එකක් කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Token එකක් කියන්නේ model එකට process කළ හැකි text එකක කුඩා unit එකක්. එය word එකක්, word කොටසක් හෝ symbol එකක් විය හැක."}]}
+{"messages":[{"role":"user","content":"What is a token in an AI model?"},{"role":"assistant","content":"A token is a unit of text processed by a language model. It can represent a word, part of a word, or a symbol."}]}
+{"messages":[{"role":"user","content":"Dataset කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Dataset කියන්නේ AI model එකක් train හෝ evaluate කිරීමට භාවිත කරන සංවිධානය කළ data එකතුවකි."}]}
+{"messages":[{"role":"user","content":"What is a dataset?"},{"role":"assistant","content":"A dataset is a collection of organized data used for tasks such as training, evaluating, or testing a machine learning model."}]}
+{"messages":[{"role":"user","content":"Model එක train කරනවා කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Model training කියන්නේ data ලබාදී model එකේ parameters වෙනස් කරමින් patterns ඉගෙනගැනීමට සැලැස්වීමයි."}]}
+{"messages":[{"role":"user","content":"What happens during model training?"},{"role":"assistant","content":"During training, the model processes examples, calculates errors, and updates its parameters to improve its predictions."}]}
+{"messages":[{"role":"user","content":"Neural network එකක් කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Neural network එකක් කියන්නේ interconnected mathematical layers භාවිත කර data වල patterns ඉගෙනගන්න machine learning model එකකි."}]}
+{"messages":[{"role":"user","content":"What is a neural network?"},{"role":"assistant","content":"A neural network is a machine learning model made of connected computational layers that learn patterns from data."}]}
+{"messages":[{"role":"user","content":"CPU එක මොකක්ද?"},{"role":"assistant","content":"CPU හෙවත් Central Processing Unit කියන්නේ computer එකේ instructions execute කරන ප්‍රධාන processing unit එකයි."}]}
+{"messages":[{"role":"user","content":"What is a CPU?"},{"role":"assistant","content":"A CPU, or Central Processing Unit, executes instructions and performs general-purpose computations in a computer."}]}
+{"messages":[{"role":"user","content":"GPU එක මොකක්ද?"},{"role":"assistant","content":"GPU හෙවත් Graphics Processing Unit කියන්නේ parallel computations සඳහා විශේෂයෙන් සුදුසු processor එකකි. AI training වලදීත් GPUs බහුලව භාවිත කරයි."}]}
+{"messages":[{"role":"user","content":"What is a GPU?"},{"role":"assistant","content":"A GPU is a processor designed for highly parallel computations. GPUs are widely used for graphics and AI workloads."}]}
+{"messages":[{"role":"user","content":"RAM කියන්නේ මොකක්ද?"},{"role":"assistant","content":"RAM කියන්නේ computer එක ක්‍රියාත්මක වන විට data සහ programs තාවකාලිකව තබාගන්න භාවිත කරන memory එකයි."}]}
+{"messages":[{"role":"user","content":"What is RAM?"},{"role":"assistant","content":"RAM is temporary working memory used by a computer to store data and programs that are currently being used."}]}
+{"messages":[{"role":"user","content":"Internet එක කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Internet කියන්නේ ලොව පුරා devices සහ networks එකිනෙකට සම්බන්ධ කරන විශාල network එකකි."}]}
+{"messages":[{"role":"user","content":"What is the internet?"},{"role":"assistant","content":"The internet is a global network of interconnected computers and devices that communicate using standardized protocols."}]}
+{"messages":[{"role":"user","content":"Website එකක් කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Website එකක් කියන්නේ internet හරහා browser එකකින් access කළ හැකි related web pages සහ resources එකතුවකි."}]}
+{"messages":[{"role":"user","content":"What is a website?"},{"role":"assistant","content":"A website is a collection of related web pages and resources that can be accessed through the internet."}]}
+{"messages":[{"role":"user","content":"Programming කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Programming කියන්නේ computer එකකට කළ යුතු කාර්යයන් instructions ලෙස ලිවීමේ ක්‍රියාවලියයි."}]}
+{"messages":[{"role":"user","content":"What is programming?"},{"role":"assistant","content":"Programming is the process of writing instructions that tell a computer how to perform tasks."}]}
+{"messages":[{"role":"user","content":"Bug එකක් කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Software bug එකක් කියන්නේ program එකේ තිබෙන error එකක් හෝ unexpected behavior එකක්."}]}
+{"messages":[{"role":"user","content":"What is a software bug?"},{"role":"assistant","content":"A software bug is an error or unexpected behavior in a program."}]}
+{"messages":[{"role":"user","content":"API කියන්නේ මොකක්ද?"},{"role":"assistant","content":"API හෙවත් Application Programming Interface කියන්නේ software components හෝ services එකිනෙකා සමඟ communicate කිරීමට භාවිත කරන interface එකකි."}]}
+{"messages":[{"role":"user","content":"What is an API?"},{"role":"assistant","content":"An API is an interface that allows different software components or services to communicate and exchange data."}]}
+{"messages":[{"role":"user","content":"Database එකක් කියන්නේ මොකක්ද?"},{"role":"assistant","content":"Database එකක් කියන්නේ data සංවිධානාත්මකව store, retrieve සහ manage කිරීමට භාවිත කරන පද්ධතියකි."}]}
+{"messages":[{"role":"user","content":"What is a database?"},{"role":"assistant","content":"A database is a system used to store, organize, retrieve, and manage data."}]}
+{"messages":[{"role":"user","content":"JSON කියන්නේ මොකක්ද?"},{"role":"assistant","content":"JSON කියන්නේ data exchange සහ configuration සඳහා බහුලව භාවිත කරන lightweight text-based data format එකකි."}]}
+{"messages":[{"role":"user","content":"What is JSON?"},{"role":"assistant","content":"JSON is a lightweight text-based format commonly used to represent and exchange structured data."}]}
+{"messages":[{"role":"user","content":"ඔයාට ප්‍රශ්නයක් තේරෙන්නේ නැත්නම් මොකද කරන්නේ?"},{"role":"assistant","content":"මට ප්‍රශ්නය පැහැදිලිව තේරෙන්නේ නැත්නම්, අවශ්‍ය තොරතුරු හෝ clarification එකක් ඉල්ලා සිටිය යුතුයි."}]}
+{"messages":[{"role":"user","content":"What should you do if you do not understand a question?"},{"role":"assistant","content":"If a question is unclear, I should explain what is unclear and ask for the information needed to answer accurately."}]}
+{"messages":[{"role":"user","content":"හොඳ AI assistant කෙනෙක් කොහොමද වැඩ කරන්නේ?"},{"role":"assistant","content":"හොඳ AI assistant කෙනෙක් userගේ ප්‍රශ්නය තේරුම්ගෙන, context එක සලකා, හැකි තරම් නිවැරදි සහ පැහැදිලි පිළිතුරක් ලබාදිය යුතුයි."}]}
+{"messages":[{"role":"user","content":"How should an AI assistant answer questions?"},{"role":"assistant","content":"An AI assistant should understand the question and context, then provide a clear and accurate response while acknowledging uncertainty when necessary."}]}
