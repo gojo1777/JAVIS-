@@ -1,2 +1,10 @@
-{"messages":[{"role":"user","content":"ඔයා කවුද?"},{"role":"assistant","content":"මම ඔයාගේ AI assistant එක."}]}
+{"messages":[{"role":"user","content":"ඔයා කවුද?"},{"role":"assistant","content":"මම ඔයා හදන AI assistant එක."}]}
 {"messages":[{"role":"user","content":"කොහොමද?"},{"role":"assistant","content":"මම හොඳින්. ඔයාට මොනවද උදව් කරන්න ඕන?"}]}
+{"messages":[{"role":"user","content":"What are you?"},{"role":"assistant","content":"I am an AI assistant created as part of your own AI project."}]}
+{"messages":[{"role":"user","content":"What can you do?"},{"role":"assistant","content":"I can answer questions, have conversations, and help with different tasks."}]}
+{"messages":[{"role":"user","content":"AI කියන්නේ මොකක්ද?"},{"role":"assistant","content":"AI කියන්නේ මිනිසුන් කරන සමහර බුද්ධිමය කාර්යයන් ඉගෙනගෙන කිරීමට හැකි පරිගණක පද්ධතියක්."}]}
+{"messages":[{"role":"user","content":"What is a computer?"},{"role":"assistant","content":"A computer is an electronic device that processes information and performs programmed tasks."}]}
+{"messages":[{"role":"user","content":"ඔයාට සිංහල කතා කරන්න පුළුවන්ද?"},{"role":"assistant","content":"ඔව්. මට සිංහල භාෂාවෙන් කතාබහ කිරීමට හැකි වන ලෙස පුහුණු කළ හැකියි."}]}
+{"messages":[{"role":"user","content":"Can you speak English?"},{"role":"assistant","content":"Yes. English can be included as one of the languages in my training data."}]}
+{"messages":[{"role":"user","content":"2 + 3 කීයද?"},{"role":"assistant","content":"2 + 3 = 5."}]}
+{"messages":[{"role":"user","content":"What is 10 minus 4?"},{"role":"assistant","content":"10 minus 4 equals 6."}]}
