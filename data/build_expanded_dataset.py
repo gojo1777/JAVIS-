@@ -4,7 +4,14 @@ import urllib.request
 from pathlib import Path
 
 OUTPUT_PATH = Path("data/conversations.jsonl")
+CUSTOM_FILE = Path("data/custom_conversations.jsonl")  # your hand-written chats (never overwritten)
 SEED = 42
+
+# ---- dataset balance (the most important settings) ----
+MATH_LIMIT = 300          # was ~3200 math rows (61% of everything)
+CODE_ALPACA_LIMIT = 500   # English code examples
+ALPACA_LIMIT = 300        # English general Q&A
+CUSTOM_REPEAT = 10        # repeat hand-written Sinhala/Singlish chats so the model learns them
 
 random.seed(SEED)
 
@@ -224,6 +231,13 @@ def add_math_dataset(data):
                 "math"
             )
 
+    # Keep only a small random sample of the math rows so they don't drown
+    # out the Sinhala / Singlish conversations.
+    math_rows = data[count_before:]
+    del data[count_before:]
+    random.shuffle(math_rows)
+    data.extend(math_rows[:MATH_LIMIT])
+
     return len(data) - count_before
 
 
@@ -259,7 +273,7 @@ def add_code_alpaca(data):
 
     count_before = len(data)
 
-    for item in raw[:1000]:
+    for item in raw[:CODE_ALPACA_LIMIT]:
 
         instruction = item.get("instruction", "")
         input_text = item.get("input", "")
@@ -295,7 +309,7 @@ def add_alpaca(data):
 
     count_before = len(data)
 
-    for item in raw[:1000]:
+    for item in raw[:ALPACA_LIMIT]:
 
         instruction = item.get("instruction", "")
         input_text = item.get("input", "")
@@ -374,6 +388,27 @@ def validate_dataset(data):
     return valid
 
 
+def load_custom_file():
+    items = []
+
+    if not CUSTOM_FILE.exists():
+        print(f"(no {CUSTOM_FILE} found - skipping)")
+        return items
+
+    with open(CUSTOM_FILE, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                item = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            items.append({"messages": item.get("messages", [])})
+
+    return items
+
+
 def build_dataset():
 
     print("=" * 60)
@@ -385,6 +420,11 @@ def build_dataset():
     print("\n[1/5] Adding custom Sinhala / Singlish / Python data...")
     custom_count = add_custom_data(data)
     print(f"Custom examples: {custom_count}")
+
+    # Hand-written chats: built-in custom examples + data/custom_conversations.jsonl
+    custom_items = list(data)
+    custom_items.extend(load_custom_file())
+    print(f"Hand-written examples (before repeat): {len(custom_items)}")
 
     print("\n[2/5] Generating mathematics dataset...")
     math_count = add_math_dataset(data)
@@ -404,6 +444,11 @@ def build_dataset():
 
     data = remove_duplicates(data)
     data = validate_dataset(data)
+
+    # Add the hand-written chats back, repeated, AFTER de-duplication.
+    custom_clean = validate_dataset(remove_duplicates(custom_items))
+    print(f"Hand-written unique examples: {len(custom_clean)} x {CUSTOM_REPEAT}")
+    data = data + custom_clean * CUSTOM_REPEAT
 
     after = len(data)
 
