@@ -39,7 +39,7 @@ class CausalSelfAttention(nn.Module):
             attn_mask=mask
         )
 
-        return x + self.dropout(output)
+        return self.dropout(output)
 
 
 class FeedForward(nn.Module):
@@ -64,7 +64,7 @@ class FeedForward(nn.Module):
         )
 
     def forward(self, x):
-        return x + self.network(x)
+        return self.network(x)
 
 
 class TransformerBlock(nn.Module):
@@ -80,11 +80,11 @@ class TransformerBlock(nn.Module):
 
     def forward(self, x):
 
-        x = self.attention(
+        x = x + self.attention(
             self.ln1(x)
         )
 
-        x = self.feed_forward(
+        x = x + self.feed_forward(
             self.ln2(x)
         )
 
