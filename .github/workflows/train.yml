@@ -6,6 +6,7 @@ on:
 jobs:
   train-and-chat:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
 
     steps:
       - name: Checkout
@@ -51,6 +52,7 @@ jobs:
 
       # 6. Save trained model
       - name: Upload model + logs
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: my-ai-model
