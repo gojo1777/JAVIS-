@@ -33,6 +33,7 @@ def validate():
     valid = 0
 
     seen = set()
+    duplicates = 0
 
     with open(
         DATASET_FILE,
@@ -140,12 +141,10 @@ def validate():
                 sort_keys=True
             )
 
+            # Duplicates are allowed on purpose: hand-written Sinhala chats
+            # are repeated (CUSTOM_REPEAT) so the model learns them.
             if signature in seen:
-
-                raise ValueError(
-                    f"Duplicate conversation "
-                    f"on line {line_number}."
-                )
+                duplicates += 1
 
             seen.add(signature)
 
@@ -172,6 +171,10 @@ def validate():
 
     print(
         f"Valid conversations: {valid}"
+    )
+
+    print(
+        f"Repeated (intentional) rows: {duplicates}"
     )
 
 
