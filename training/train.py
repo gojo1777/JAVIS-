@@ -1,11 +1,12 @@
 import json
+import random
 import sys
 import time
 from pathlib import Path
 
 import torch
 import torch.nn.functional as F
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, Sampler
 
 
 # =========================
@@ -32,9 +33,10 @@ from dataset import AIDataset
 # Settings (Optimized for Fast Training on GitHub Actions)
 # =========================
 
-BATCH_SIZE = 16           # Batch size වැඩි කර Speed එක වැඩි කරන ලදී
+BATCH_SIZE = 16
 LEARNING_RATE = 3e-4
-EPOCHS = 20                # 300 තිබූ Epochs ගණන 5 දක්වා අඩු කරන ලදී
+EPOCHS = 10
+MAX_TRAIN_SECONDS = 45 * 60   # time budget: stop and save before GitHub kills the job
 BLOCK_SIZE = 256
 GRAD_CLIP = 1.0
 
@@ -185,10 +187,35 @@ def collate_fn(batch):
 # DataLoader
 # =========================
 
+class BucketSampler(Sampler):
+    """Groups similar-length samples into the same batch to avoid wasteful padding."""
+
+    def __init__(self, lengths, batch_size):
+        self.lengths = lengths
+        self.batch_size = batch_size
+
+    def __iter__(self):
+        idx = sorted(
+            range(len(self.lengths)),
+            key=lambda i: self.lengths[i] + random.random() * 8
+        )
+        batches = [
+            idx[i:i + self.batch_size]
+            for i in range(0, len(idx), self.batch_size)
+        ]
+        random.shuffle(batches)
+        return iter(batches)
+
+    def __len__(self):
+        return (len(self.lengths) + self.batch_size - 1) // self.batch_size
+
+
 loader = DataLoader(
     dataset,
-    batch_size=BATCH_SIZE,
-    shuffle=True,
+    batch_sampler=BucketSampler(
+        [len(t) for t in dataset.samples],
+        BATCH_SIZE
+    ),
     collate_fn=collate_fn
 )
 
@@ -270,6 +297,7 @@ log(f"Device: {DEVICE}")
 log(f"Training samples: {len(dataset)}")
 log(f"Vocabulary: {len(tokenizer)}")
 log(f"Epochs: {EPOCHS}")
+log(f"Time budget: {MAX_TRAIN_SECONDS // 60} min")
 log("==============================")
 log("")
 
@@ -282,6 +310,7 @@ model.train()
 
 best_loss = float("inf")
 start_time = time.time()
+out_of_time = False
 
 for epoch in range(EPOCHS):
 
@@ -319,6 +348,13 @@ for epoch in range(EPOCHS):
         total_loss += loss.item()
         batches += 1
 
+        if time.time() - start_time > MAX_TRAIN_SECONDS:
+            out_of_time = True
+            break
+
+    if batches == 0:
+        break
+
     average_loss = total_loss / batches
 
     if (epoch + 1) % LOG_EVERY == 0 or epoch == EPOCHS - 1:
@@ -340,6 +376,10 @@ for epoch in range(EPOCHS):
             sample = generate_sample(prompt)
             log(f"    [sample] {prompt!r} -> {sample!r}")
         log("")
+
+    if out_of_time:
+        log("Time budget reached - stopping early and saving.")
+        break
 
 
 # =========================
